@@ -1,0 +1,11 @@
+[package]
+name = "aura-core"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+serde.workspace = true
+ron.workspace = true
+anyhow.workspace = true
+directories = "6.0.0"
+display-info = "0.5.8"
