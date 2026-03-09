@@ -1,21 +1,19 @@
 use directories::ProjectDirs;
 use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 use std::fs;
 use std::path::PathBuf;
 
-#[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone, Default)]
 pub struct GlobalConfig {
-    pub streaming_mode: bool,
-    pub last_display_signature: Option<String>,
+    pub known_displays: HashMap<String, DisplaySettings>,
 }
 
-impl Default for GlobalConfig {
-    fn default() -> Self {
-        Self {
-            streaming_mode: false,
-            last_display_signature: None,
-        }
-    }
+#[derive(Debug, Serialize, Deserialize, Clone, Default)]
+pub struct DisplaySettings {
+    pub name: String,
+    pub resolution: (u32, u32),
+    pub refresh_rate: u32,
 }
 
 impl GlobalConfig {
