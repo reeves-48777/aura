@@ -28,11 +28,10 @@ impl GameProfile {
         }
     }
 
-    pub fn get_config_path() -> anyhow::Result<PathBuf> {
+    pub fn get_profiles_path() -> anyhow::Result<PathBuf> {
         let proj_dirs = ProjectDirs::from("com", "aura", "aura")
-            .ok_or_else(|| anyhow::anyhow!("Cannot find config folder"))?;
-
-        let path = proj_dirs.config_dir().to_path_buf();
+            .ok_or_else(|| anyhow::anyhow!("Cannot find project dirs for aura"))?;
+        let path = proj_dirs.data_dir().join("profiles");
 
         if !path.exists() {
             fs::create_dir_all(&path)?;
@@ -42,8 +41,7 @@ impl GameProfile {
     }
 
     pub fn save_to_disk(&self) -> anyhow::Result<()> {
-        let mut path = Self::get_config_path()?;
-
+        let mut path = Self::get_profiles_path()?;
         path.push(format!("{}.ron", self.app_id));
 
         let content = ron::ser::to_string_pretty(self, ron::ser::PrettyConfig::default())?;
@@ -53,7 +51,7 @@ impl GameProfile {
     }
 
     pub fn load_from_disk(app_id: u32) -> anyhow::Result<Self> {
-        let mut path = Self::get_config_path()?;
+        let mut path = Self::get_profiles_path()?;
         path.push(format!("{}.ron", app_id));
 
         let content = fs::read_to_string(path)?;

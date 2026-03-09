@@ -1,12 +1,15 @@
+pub mod config;
 pub mod game_profile;
 pub mod gamescope;
 
+pub use config::GlobalConfig;
 pub use game_profile::Builder as ProfileBuilder;
 pub use game_profile::GameProfile;
 
 #[cfg(test)]
 mod tests {
     use super::GameProfile;
+    use super::GlobalConfig;
     use super::game_profile;
     use super::gamescope;
     use std::fs;
@@ -42,7 +45,20 @@ mod tests {
 
     #[test]
     fn test_config_dir() {
-        let path_result = GameProfile::get_config_path();
+        let path_result = GlobalConfig::get_config_path();
+        assert!(path_result.is_ok(), "Cannot get config path");
+
+        let config_path = path_result.unwrap();
+        assert!(
+            config_path.exists(),
+            "Directory {:?} does not exists",
+            config_path
+        );
+    }
+
+    #[test]
+    fn test_profiles_dir() {
+        let path_result = GameProfile::get_profiles_path();
         assert!(path_result.is_ok(), "Cannot get config path");
 
         let config_path = path_result.unwrap();
@@ -72,7 +88,7 @@ mod tests {
         );
 
         // remove the file to clean
-        fs::remove_file(GameProfile::get_config_path()?.join(format!("{}.ron", app_id)))?;
+        fs::remove_file(GameProfile::get_profiles_path()?.join(format!("{}.ron", app_id)))?;
 
         Ok(())
     }
