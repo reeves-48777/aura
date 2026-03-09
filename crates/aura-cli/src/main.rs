@@ -8,10 +8,7 @@ fn main() -> anyhow::Result<()> {
                 .with_refresh_rate(165)
                 .with_upscaler(|u| {
                     u.with_filter(gamescope::upscaler::Filter::Fsr)
-                        .with_settings(gamescope::upscaler::Settings {
-                            scale: Some(0.5),
-                            sharpness: None,
-                        })
+                        .with_settings(gamescope::upscaler::Settings::new(None, None))
                 })
                 .immediate_flips()
         })

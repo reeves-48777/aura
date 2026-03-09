@@ -58,7 +58,10 @@ impl GameProfile {
 
         let content = fs::read_to_string(path)?;
 
-        let profile: GameProfile = ron::de::from_str(&content)?;
+        let mut profile: GameProfile = ron::de::from_str(&content)?;
+        // SHIELD
+        profile.params.upscaler.settings.sanitize();
+
         Ok(profile)
     }
 
@@ -92,7 +95,7 @@ impl GameProfile {
             args.push(scaler_filter.to_string());
         }
 
-        if let Some(upscaler_sharpness) = self.params.upscaler.settings.sharpness {
+        if let Some(upscaler_sharpness) = self.params.upscaler.settings.sharpness() {
             args.push("--sharpness".to_string());
             args.push(upscaler_sharpness.to_string());
         }

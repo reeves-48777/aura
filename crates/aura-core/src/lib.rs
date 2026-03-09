@@ -28,10 +28,7 @@ mod tests {
         let profile = game_profile::Builder::new(0, "Test".to_string())
             .with_params(|p| {
                 p.with_output_res((1920, 1080)).with_upscaler(|u| {
-                    u.with_settings(gamescope::upscaler::Settings {
-                        scale: Some(0.5),
-                        sharpness: None,
-                    })
+                    u.with_settings(gamescope::upscaler::Settings::new(Some(0.5), None))
                 })
             })
             .build();

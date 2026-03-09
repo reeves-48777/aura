@@ -87,7 +87,7 @@ impl Params {
         } else {
             self.upscaler
                 .settings
-                .scale
+                .scale()
                 .as_ref()
                 .map(|s| ((output.0 as f32 * s) as u32, (output.1 as f32 * s) as u32))
                 .unwrap_or(output)
