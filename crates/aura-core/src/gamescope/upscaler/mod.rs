@@ -53,6 +53,7 @@ impl Settings {
     pub fn new(scale: Option<f32>, sharpness: Option<u32>) -> Self {
         let mut settings = Self { scale, sharpness };
         settings.sanitize();
+        println!("Built the following settings : {:?}", settings);
         settings
     }
 
@@ -81,5 +82,3 @@ impl Default for Settings {
         }
     }
 }
-
-pub struct SettingsCreateError;

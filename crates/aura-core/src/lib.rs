@@ -1,8 +1,10 @@
 pub mod config;
+// pub mod errors;
 pub mod game_profile;
 pub mod gamescope;
 
 pub use config::GlobalConfig;
+// pub use errors::AuraError;
 pub use game_profile::Builder as ProfileBuilder;
 pub use game_profile::GameProfile;
 
